@@ -41,6 +41,7 @@ function App() {
           name: item.name,
           speed: item.speed,
           ml: item.ml,
+          id: counter++,
         };
         setModalInput(newInputModal);
       }
@@ -51,8 +52,17 @@ function App() {
   const closeModal = () => {
     setModal("");
   };
-  const handlerOk = () => {
-    console.log("obje :>> ");
+
+  const handlerOk = (e) => {
+    car.map((item, index) => {
+      if (index + 1 === modalInput.id) {
+        item.name = setModalInput(item.name);
+        console.log("item", item);
+      } else {
+        return item;
+      }
+      return item;
+    });
   };
   return (
     <>
@@ -93,6 +103,7 @@ function App() {
         closeModal={closeModal}
         modalInput={modalInput}
         handlerOk={handlerOk}
+        setCarName={setCarName}
       />
     </>
   );
