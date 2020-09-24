@@ -19,7 +19,12 @@ function App() {
   const [carSpeed, setCarSpeed] = useState("");
   const [carMl, setCarMl] = useState("");
   const [modal, setModal] = useState("");
-  const [modalInput, setModalInput] = useState(template);
+  // const [modalInput, setModalInput] = useState(template);
+  //
+  const [modalName, setModalName] = useState("");
+  const [modalSpeed, setModalSpeed] = useState("");
+  const [modalMl, setModalMl] = useState("");
+  const [modalId, setModalId] = useState("");
 
   const handlerClick = () => {
     if (carName === carName.toString() && !isNaN(carSpeed) && !isNaN(carMl) && carName !== "") {
@@ -33,18 +38,15 @@ function App() {
     setCarMl("");
   };
 
-  const openModal = (e, number) => {
+  const openModal = (e, id) => {
     const newArr = car.filter((item) => {
-      if (item.id === number) {
-        const newInputModal = {
-          ...modalInput,
-          name: item.name,
-          speed: item.speed,
-          ml: item.ml,
-          id: counter++,
-        };
-        setModalInput(newInputModal);
+      if (item.id === id) {
+        setModalName(item.name);
+        setModalSpeed(item.speed);
+        setModalMl(item.ml);
+        setModalId(item.id);
       }
+      return item;
     });
     setModal("active");
   };
@@ -53,17 +55,18 @@ function App() {
     setModal("");
   };
 
-  const handlerOk = (e) => {
-    car.map((item, index) => {
-      if (index + 1 === modalInput.id) {
-        item.name = setModalInput(item.name);
-        console.log("item", item);
-      } else {
-        return item;
+  const handlerOk = (e, id) => {
+    car.map((item, i) => {
+      if (item.id === id) {
+        item.name = modalName;
+        item.speed = modalSpeed;
+        item.ml = modalMl;
       }
       return item;
     });
+    setModal("");
   };
+
   return (
     <>
       <div className="App">
@@ -101,9 +104,15 @@ function App() {
         modal={modal}
         setModal={setModal}
         closeModal={closeModal}
-        modalInput={modalInput}
+        // modalInput={modalInput}
         handlerOk={handlerOk}
-        setCarName={setCarName}
+        setModalName={setModalName}
+        setModalSpeed={setModalSpeed}
+        setModalMl={setModalMl}
+        modalName={modalName}
+        modalSpeed={modalSpeed}
+        modalMl={modalMl}
+        modalId={modalId}
       />
     </>
   );
